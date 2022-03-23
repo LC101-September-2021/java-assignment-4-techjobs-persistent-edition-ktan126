@@ -9,21 +9,21 @@ import java.util.Optional;
 public class Job extends AbstractEntity{
 
     @ManyToOne
+    @JoinColumn(name = "employer_id")
     private Employer employer;
 
     @ManyToMany
-    private List<Skill> skills = new ArrayList<>();
+    private List<Skill> skills;
+
 
     public Job() {
     }
 
-    public Job(Employer anEmployer, List<Skill> skills) {
+    public Job(Employer anEmployer, List<Skill> someSkills) {
         super();
         this.employer = anEmployer;
-        this.skills = skills;
+        this.skills = someSkills;
     }
-
-    // Getters and setters.
 
     public Employer getEmployer() {
         return employer;
@@ -37,10 +37,7 @@ public class Job extends AbstractEntity{
         return skills;
     }
 
-    public void setSkills(List<Skill> skill){
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
-    }
-
-    public void setEmployer(Optional<Employer> employer) {
     }
 }

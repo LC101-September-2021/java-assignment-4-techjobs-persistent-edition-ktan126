@@ -19,47 +19,39 @@ public class SkillController {
     @Autowired
     private SkillRepository skillRepository;
 
-    @RequestMapping("")
-    public String index(Model model){
-        model.addAttribute("skills", skillRepository.findAll());
-        return "index";
-    }
-
-    @GetMapping("")
-    public String displayViewAllSkills(Model model){
-        model.addAttribute("title", "All Skills");
+    @GetMapping
+    public String displayAllSkills(Model model) {
+        model.addAttribute("title", "add skill");
         model.addAttribute("skills", skillRepository.findAll());
         return "skills/index";
     }
 
     @GetMapping("add")
-    public String displayAddSkillForm(Model model){
+    public String displayAddSkillForm(Model model) {
         model.addAttribute(new Skill());
         return "skills/add";
     }
 
     @PostMapping("add")
     public String processAddSkillForm(@ModelAttribute @Valid Skill newSkill,
-                                      Errors errors, Model model){
-        if(errors.hasErrors()){
+                                      Errors errors, Model model) {
+        if (errors.hasErrors()) {
             return "skills/add";
         }
         skillRepository.save(newSkill);
-        return "skills/add";
+        return "redirect:";
     }
 
     @GetMapping("view/{skillId}")
-    public String displayViewSkill(Model model, @PathVariable int skillId){
+    public String displayViewEmployer(Model model, @PathVariable int skillId) {
 
-        Optional optSkill = skillRepository.findById(skillId);
-        if(optSkill.isPresent()){
+        Optional<Skill> optSkill = skillRepository.findById(skillId);
+        if (optSkill.isPresent()) {
             Skill skill = (Skill) optSkill.get();
-            model.addAttribute("Skill", skill);
+            model.addAttribute("skill", skill);
             return "skills/view";
-        }else {
+        } else {
             return "redirect:../";
         }
-
     }
-
 }

@@ -21,13 +21,13 @@ import java.util.HashMap;
 public class ListController {
 
     @Autowired
+    private JobRepository jobRepository;
+
+    @Autowired
     private EmployerRepository employerRepository;
 
     @Autowired
     private SkillRepository skillRepository;
-
-    @Autowired
-    private JobRepository jobRepository;
 
     static HashMap<String, String> columnChoices = new HashMap<>();
 
@@ -41,6 +41,7 @@ public class ListController {
 
     @RequestMapping("")
     public String list(Model model) {
+
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
 
